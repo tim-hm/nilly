@@ -5,7 +5,6 @@
   "dependencies": {
     "@cosmjs/proto-signing": "^0.32.3",
     "@cosmjs/stargate": "^0.32.3",
-    "@nillion/client": "file:nillion.tgz",
     "buffer": "^6.0.3",
     "crypto-browserify": "^3.12.0",
     "react": "^18.3.1",

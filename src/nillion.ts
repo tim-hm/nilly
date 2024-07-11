@@ -6,8 +6,8 @@ import init, {
   UserKey,
   NodeKey,
   NillionClient,
-} from "@nillion/client";
-import { MsgPayFor, typeUrl } from "@nillion/client/proto";
+} from "@nillion/client-web";
+import { MsgPayFor, typeUrl } from "@nillion/client-web/proto";
 
 export interface Config {
   clusterId: string;

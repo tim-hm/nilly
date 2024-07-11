@@ -1,4 +1,4 @@
-import { Operation, Secret, Secrets } from "@nillion/client";
+import { Operation, NadaValue, NadaValues } from "@nillion/client-web";
 import React, { useRef, useState } from "react";
 import useAsyncEffect from "use-async-effect";
 import { connect, pay } from "./nillion";
@@ -14,9 +14,9 @@ export function DoNillionStuff() {
     const context = await connect();
 
     const secretName = "foo";
-    const secrets = new Secrets();
-    secrets.insert(secretName, Secret.new_non_zero_unsigned_integer("42"));
-    const storeOperation = Operation.store_secrets(secrets);
+    const secrets = new NadaValues();
+    secrets.insert(secretName, NadaValue.new_public_unsigned_integer("42"));
+    const storeOperation = Operation.store_values(secrets, 1);
 
     const storeQuote = await context.vm.client.request_price_quote(
       context.config.clusterId,
@@ -28,7 +28,7 @@ export function DoNillionStuff() {
     const storeReceipt = await pay(context, storeOperation);
     console.log("receipt: ", JSON.stringify(storeReceipt));
 
-    const storeId = await context.vm.client.store_secrets(
+    const storeId = await context.vm.client.store_values(
       context.config.clusterId,
       secrets,
       undefined,
@@ -43,7 +43,7 @@ export function DoNillionStuff() {
       storeId,
     };
 
-    const retrieveOperation = Operation.retrieve_secret();
+    const retrieveOperation = Operation.retrieve_value();
     const retrieveQuote = await context.vm.client.request_price_quote(
       context.config.clusterId,
       retrieveOperation,
@@ -53,7 +53,7 @@ export function DoNillionStuff() {
     const retrieveReceipt = await pay(context, retrieveOperation);
     console.log("receipt: ", JSON.stringify(retrieveReceipt));
 
-    const secret = await context.vm.client.retrieve_secret(
+    const secret = await context.vm.client.retrieve_value(
       context.config.clusterId,
       storeId,
       secretName,
