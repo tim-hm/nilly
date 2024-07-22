@@ -1,8 +1,11 @@
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const path = require("path");
+import HtmlWebpackPlugin from "html-webpack-plugin";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 
-module.exports = {
-  mode: "development",
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+export default {
   entry: "./src/index.tsx",
   devServer: {
     static: {
@@ -17,6 +20,13 @@ module.exports = {
     client: {
       overlay: false,
     },
+    proxy: [
+      {
+        context: ["/nilchain"],
+        target: "http://localhost:26648",
+        pathRewrite: { "^/nilchain": "" },
+      },
+    ],
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -27,8 +37,8 @@ module.exports = {
     extensions: [".ts", ".tsx", ".js"],
     fallback: {
       crypto: false,
-      buffer: false,
       stream: false,
+      buffer: false,
       vm: false,
     },
   },

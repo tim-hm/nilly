@@ -7,10 +7,12 @@
       "esnext"
     ],
     "jsx": "react",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext"
+    "target": "es2022",
+    "module": "es2022",
+    "moduleResolution": "bundler",
+    "skipLibCheck": true
   },
-  "include": [
-    "src"
+  "exclude": [
+    "node_modules"
   ]
 }
